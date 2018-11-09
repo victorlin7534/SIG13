@@ -6,8 +6,9 @@
 
 static void signalhandler(int signo){
   if(signo == SIGINT){
-    int file = open("sig.txt",O_CREAT | O_APPEND | O_RDWR,S_IRWXU);
+    int file = open("sig.txt",O_CREAT | O_APPEND | O_RDWR,S_IRUSR|S_IWUSR);
     write(file,"program exit due to SIGINT\n",27);
+    close(file);
     exit(0);
   }
   if(signo == SIGUSR1){
