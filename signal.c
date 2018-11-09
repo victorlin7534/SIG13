@@ -2,11 +2,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <fcntl.h>
 
 static void signalhandler(int signo){
   if(signo == SIGINT){
-    open("sig.txt",O_CREAT | O_RDWR,S_IWUSR);
-    write();
+    int file = open("sig.txt",O_CREAT | O_APPEND | O_RDWR,S_IRWXU);
+    write(file,"program exit due to SIGINT\n",27);
     exit(0);
   }
   if(signo == SIGUSR1){
@@ -15,6 +16,8 @@ static void signalhandler(int signo){
 }
 
 int main(){
+  signal(SIGINT,signalhandler);
+  signal(SIGUSR1,signalhandler);
   while(1){
     printf("process ID: %d\n",getpid());
     sleep(1);

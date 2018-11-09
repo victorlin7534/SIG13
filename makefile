@@ -5,4 +5,4 @@ signal.o: signal.c
 run:
 	./test
 clean:
-	rm -f test* *.o *.out *exe 
+	rm -f *txt test* *.o *.out *exe 
